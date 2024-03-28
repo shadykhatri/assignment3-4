@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Race</title>
+</head>
+<body>
+
+<h1>Car Race</h1>
+
+<div id="carInfo"></div>
+
+<script>
+class Car {
+  constructor(brand, model, year, color, price, gas) {
+    this.brand = brand;
+    this.model = model;
+    this.year = year;
+    this.color = color;
+    this.price = price;
+    this.gas = gas;
+  }
+
+  honk() {
+    console.log("Tuut tuut");
+    console.log(`Brand: ${this.brand}, Model: ${this.model}, Year: ${this.year}, Color: ${this.color}, Price: $${this.price}`);
+  }
+
+  updateGas() {
+    const currentYear = new Date().getFullYear();
+    let gasLoss = 5;
+    if (currentYear > this.year) {
+      gasLoss += currentYear - this.year;
+    }
+    this.gas -= gasLoss;
+    if (this.gas < 0) {
+      this.gas = 0;
+    }
+  }
+
+  displayInfo() {
+    return `Brand: ${this.brand}, Model: ${this.model}, Year: ${this.year}, Color: ${this.color}, Price: $${this.price}, Gas Remaining: ${this.gas} liters`;
+  }
+}
+
+const cars = [
+  new Car("Honda", "CR-V", 2023, "Red", 50000, 45),
+  new Car("Ford", "F-150", 2020, "Black", 25000, 30),
+  new Car("BMW", "X5", 2022, "Green", 60000, 65),
+  new Car("Mazda", "CX-5", 2019, "White", 15000, 60),
+  new Car("Audi", "Q7", 2018, "Silver", 52000, 47),
+  new Car("Kia", "Forte", 2020, "Blue", 21000, 56)
+];
+
+const carInfoDiv = document.getElementById("carInfo");
+
+function race() {
+  for (let i = 1; i <= 7; i++) {
+    carInfoDiv.innerHTML += `<h2>Turn ${i}</h2>`;
+    cars.forEach(car => {
+      car.updateGas();
+      carInfoDiv.innerHTML += `<p>${car.displayInfo()}</p>`;
+    });
+  }
+}
+
+race();
+</script>
+
+</body>
+</html>
